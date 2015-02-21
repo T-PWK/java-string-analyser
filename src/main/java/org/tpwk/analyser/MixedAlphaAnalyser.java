@@ -1,8 +1,8 @@
 package org.tpwk.analyser;
 
-public class MixedAlphaAnalyzer extends PatternAnalyser
+public class MixedAlphaAnalyser extends PatternAnalyser
 {
-    public MixedAlphaAnalyzer()
+    public MixedAlphaAnalyser()
     {
         super("mixedalpha", "^[\\p{Alpha}]+$", "\\p{Lower}", "\\p{Upper}");
     }

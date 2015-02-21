@@ -1,8 +1,8 @@
 package org.tpwk.analyser;
 
-public class MixedAlphaNumAnalyzer extends PatternAnalyser
+public class MixedAlphaNumAnalyser extends PatternAnalyser
 {
-    public MixedAlphaNumAnalyzer()
+    public MixedAlphaNumAnalyser()
     {
         super("mixedalphanum", "^[\\p{Alnum}]+$", "\\p{Lower}+", "\\p{Upper}+", "\\p{Digit}+");
     }

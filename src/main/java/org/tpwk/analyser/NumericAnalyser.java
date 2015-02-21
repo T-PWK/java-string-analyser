@@ -1,8 +1,8 @@
 package org.tpwk.analyser;
 
-public class NumericAnalyzer extends PatternAnalyser
+public class NumericAnalyser extends PatternAnalyser
 {
-    public NumericAnalyzer()
+    public NumericAnalyser()
     {
         super("numeric", "^\\p{Digit}+$");
     }

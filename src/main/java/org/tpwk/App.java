@@ -17,11 +17,11 @@ public class App
         final AnalysisFormatter formatter = new OutputStreamFormatter();
 
         final Analyser[] analysers = new Analyser[]{
-                new NumericAnalyzer(), new LowerAlphaAnalyzer(), new LengthAnalyser()
+                new NumericAnalyser(), new LowerAlphaAnalyzer(), new LengthAnalyser()
         };
 
         final GroupAnalyser group = GroupAnalyser.withName("Test Group")
-                .addAnalyzers(NumericAnalyzer.class, LowerAlphaAnalyzer.class)
+                .addAnalyzers(NumericAnalyser.class, LowerAlphaAnalyzer.class)
                 .addAnalyzers(new LengthAnalyser())
                 .build();
 

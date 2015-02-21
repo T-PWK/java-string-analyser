@@ -1,8 +1,8 @@
 package org.tpwk.analyser;
 
-public class SpecialAnalyzer extends PatternAnalyser
+public class SpecialAnalyser extends PatternAnalyser
 {
-    public SpecialAnalyzer()
+    public SpecialAnalyser()
     {
         super("special", "^[\\p{Punct}]+$");
     }

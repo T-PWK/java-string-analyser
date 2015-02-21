@@ -19,12 +19,17 @@ public class PatternAnalysersTest
     public static Collection<Object[]> data()
     {
         return Arrays.asList(new Object[][]{
-                { LowerAlphaAnalyzer.class, new String[]{ "", "1", "ab", "abc", "a b", "abc3", "ABC", "Abc" }, 2 },
-                { LowerAlphaNumAnalyser.class, new String[]{ "", "1", "ab", "abc", "abc3", "ABC", "Abc", "123b", "a 5b" }, 2 },
-                { MixedAlphaAnalyzer.class, new String[]{ "", "123", "abc", "ab2", "AB2", "Abc", "Ab2" }, 1 },
-                { MixedAlphaNumAnalyzer.class, new String[]{ "", "123", "abc", "ab2", "AB2", "Abc", "Ab2" }, 1 },
-                { NumericAnalyzer.class, new String[]{ "", "123", "abc", "ab2", "AB2", "Abc", "Ab2" }, 1 },
-                { SpecialAnalyzer.class, new String[]{ "", "123", "abc", "ABC", "AB2,", "Abc.", "($%)" }, 1 }
+                {LowerAlphaAnalyzer.class, new String[]{"", "1", "ab", "abc", "a b", "abc3", "ABC", "Abc"}, 2},
+                {LowerAlphaNumAnalyser.class, new String[]{"", "1", "ab", "abc", "abc3", "ABC", "Abc", "123b", "a 5b"}, 2},
+                {MixedAlphaAnalyser.class, new String[]{"", "123", "abc", "ab2", "AB2", "Abc", "Ab2"}, 1},
+                {MixedAlphaNumAnalyser.class, new String[]{"", "123", "abc", "ab2", "AB2", "Abc", "Ab2"}, 1},
+                {NumericAnalyser.class, new String[]{"", "123", "abc", "ab2", "AB2", "Abc", "Ab2"}, 1},
+                {SpecialAnalyser.class, new String[]{"", "123", "abc", "ABC", "AB2,", "Abc.", "($%)"}, 1},
+                {SpecialNumAnalyser.class, new String[]{"", "123", "abc", "ABC", "Abc.", "($%)", "(2$%)"}, 1},
+                {UpperAlphaAnalyser.class, new String[]{"", "123", "abc", "ABC", "Abc2", "($%)", "(2$%)"}, 1},
+                {UpperAlphaNumAnalyser.class, new String[]{"", "123", "abc", "ABC", "Abc2", "ABC2", "(2$%)"}, 1},
+                {UpperAlphaSpecialAnalyser.class, new String[]{"", "123", "abc", "ABC", "Abc2", "ABC2", "(A$%)"}, 1},
+                {UpperAlphaSpecialNumAnalyser.class, new String[]{"", "123", "abc", "ABC", "Abc2.", "ABC2", "(A2$%)"}, 1},
         });
     }
 
@@ -82,6 +87,4 @@ public class PatternAnalysersTest
     {
         analyser.analyse(null);
     }
-
-
 }
