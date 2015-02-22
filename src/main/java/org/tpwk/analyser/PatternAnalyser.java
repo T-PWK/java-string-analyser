@@ -113,7 +113,7 @@ public class PatternAnalyser implements Analyser
         final Map<String, Integer> result = new HashMap<>();
         result.put(getCode(), match);
 
-        return new SimpleAnalysisResult(total, result);
+        return new SimpleAnalysisResult(getCode(), total, result);
     }
 
     public String getCode()

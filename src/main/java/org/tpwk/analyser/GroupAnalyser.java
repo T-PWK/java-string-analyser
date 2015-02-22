@@ -1,10 +1,9 @@
 package org.tpwk.analyser;
 
 import org.tpwk.analysis.AnalysisResult;
+import org.tpwk.analysis.SimpleAnalysisResult;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GroupAnalyser implements Analyser
@@ -29,21 +28,21 @@ public class GroupAnalyser implements Analyser
             return new GroupAnalyser(name, analysers);
         }
 
-        public GroupAnalyserBuilder setName(final String name)
+        public GroupAnalyserBuilder withName(final String name)
         {
             this.name = name;
 
             return this;
         }
 
-        public GroupAnalyserBuilder addAnalyzers(final Analyser... analyzers)
+        public GroupAnalyserBuilder withAnalyzers(final Analyser... analyzers)
         {
             this.analysers.addAll(Arrays.asList(analyzers));
 
             return this;
         }
 
-        public GroupAnalyserBuilder addAnalyzers(final Class<? extends Analyser>... analyzers)
+        public GroupAnalyserBuilder withAnalyzers(final Class<? extends Analyser>... analyzers)
         {
             this.analysers.addAll(
                     Arrays.stream(analyzers).map(GroupAnalyserBuilder::creteInstance).collect(Collectors.toList()));
@@ -64,6 +63,8 @@ public class GroupAnalyser implements Analyser
         }
     }
 
+    private int total;
+
     private final String name;
 
     private final List<Analyser> analysers;
@@ -76,32 +77,32 @@ public class GroupAnalyser implements Analyser
 
     public static GroupAnalyserBuilder withName(final String name)
     {
-        return new GroupAnalyserBuilder().setName(name);
+        return new GroupAnalyserBuilder().withName(name);
     }
 
     public static GroupAnalyserBuilder withAnalyzers(final Analyser... analyzers)
     {
-        return new GroupAnalyserBuilder().addAnalyzers(analyzers);
+        return new GroupAnalyserBuilder().withAnalyzers(analyzers);
     }
 
-    public static GroupAnalyserBuilder withAnalyzers(final Class<Analyser>... analyzers)
+    public static GroupAnalyserBuilder withAnalyzers(final Class<? extends Analyser>... analyzers)
     {
-        return new GroupAnalyserBuilder().addAnalyzers(analyzers);
+        return new GroupAnalyserBuilder().withAnalyzers(analyzers);
     }
 
     @Override
     public void analyse(final String input)
     {
+        total++;
         analysers.forEach(a -> a.analyse(input));
     }
 
     @Override
     public AnalysisResult getAnalysis()
     {
-        // TODO: temporary implementation
-        this.analysers.forEach(a -> System.out.printf("Analysis:%s%n\t%s - %d%n%n",
-                this.name, a.getAnalysis().getResults(), a.getAnalysis().getTotal()));
+        final Map<String, Integer> values = new HashMap<>();
+        analysers.forEach(a -> values.putAll(a.getAnalysis().getResults()));
 
-        return null;
+        return new SimpleAnalysisResult(name, total, values);
     }
 }

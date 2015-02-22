@@ -4,7 +4,9 @@ import java.util.Map;
 
 public interface AnalysisResult
 {
-    Map<String, Integer> getResults();
+    String getName();
 
     int getTotal();
+
+    Map<String, Integer> getResults();
 }

@@ -21,8 +21,8 @@ public class App
         };
 
         final GroupAnalyser group = GroupAnalyser.withName("Test Group")
-                .addAnalyzers(NumericAnalyser.class, LowerAlphaAnalyzer.class)
-                .addAnalyzers(new LengthAnalyser())
+                .withAnalyzers(NumericAnalyser.class, LowerAlphaAnalyzer.class)
+                .withAnalyzers(new LengthAnalyser())
                 .build();
 
         try (final StringSource source = new FileSource(Paths.get("passwords.txt"));

@@ -26,6 +26,6 @@ public class LengthAnalyser implements Analyser
     @Override
     public AnalysisResult getAnalysis()
     {
-        return new SimpleAnalysisResult(total, results);
+        return new SimpleAnalysisResult("length", total, results);
     }
 }
