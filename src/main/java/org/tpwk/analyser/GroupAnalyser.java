@@ -3,7 +3,10 @@ package org.tpwk.analyser;
 import org.tpwk.analysis.AnalysisResult;
 import org.tpwk.analysis.SimpleAnalysisResult;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GroupAnalyser implements Analyser
@@ -35,14 +38,14 @@ public class GroupAnalyser implements Analyser
             return this;
         }
 
-        public GroupAnalyserBuilder withAnalyzers(final Analyser... analyzers)
+        public GroupAnalyserBuilder withAnalysers(final Analyser... analyzers)
         {
             this.analysers.addAll(Arrays.asList(analyzers));
 
             return this;
         }
 
-        public GroupAnalyserBuilder withAnalyzers(final Class<? extends Analyser>... analyzers)
+        public GroupAnalyserBuilder withAnalysers(final Class<? extends Analyser>... analyzers)
         {
             this.analysers.addAll(
                     Arrays.stream(analyzers).map(GroupAnalyserBuilder::creteInstance).collect(Collectors.toList()));
@@ -55,8 +58,7 @@ public class GroupAnalyser implements Analyser
             try
             {
                 return analyserClass.newInstance();
-            }
-            catch (InstantiationException | IllegalAccessException e)
+            } catch (InstantiationException | IllegalAccessException e)
             {
                 throw new RuntimeException(e);
             }
@@ -82,12 +84,12 @@ public class GroupAnalyser implements Analyser
 
     public static GroupAnalyserBuilder withAnalyzers(final Analyser... analyzers)
     {
-        return new GroupAnalyserBuilder().withAnalyzers(analyzers);
+        return new GroupAnalyserBuilder().withAnalysers(analyzers);
     }
 
-    public static GroupAnalyserBuilder withAnalyzers(final Class<? extends Analyser>... analyzers)
+    public static GroupAnalyserBuilder withAnalysers(final Class<? extends Analyser>... analyzers)
     {
-        return new GroupAnalyserBuilder().withAnalyzers(analyzers);
+        return new GroupAnalyserBuilder().withAnalysers(analyzers);
     }
 
     @Override
@@ -100,8 +102,9 @@ public class GroupAnalyser implements Analyser
     @Override
     public AnalysisResult getAnalysis()
     {
-        final Map<String, Integer> values = new HashMap<>();
-        analysers.forEach(a -> values.putAll(a.getAnalysis().getResults()));
+        final Map<String, Integer> values = analysers.stream()
+                .flatMap(a -> a.getAnalysis().getResults().entrySet().stream())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         return new SimpleAnalysisResult(name, total, values);
     }

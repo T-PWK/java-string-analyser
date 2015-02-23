@@ -14,7 +14,7 @@ public class GroupAnalyserTest
     @Test(expected = IllegalArgumentException.class)
     public void buildGroupWithNoName()
     {
-        GroupAnalyser.withAnalyzers(LengthAnalyser.class).build();
+        GroupAnalyser.withAnalysers(LengthAnalyser.class).build();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -26,7 +26,7 @@ public class GroupAnalyserTest
     @Test
     public void buildGroupAnalysers()
     {
-        final GroupAnalyser group = GroupAnalyser.withName("Test").withAnalyzers(LengthAnalyser.class).build();
+        final GroupAnalyser group = GroupAnalyser.withName("Test").withAnalysers(LengthAnalyser.class).build();
 
         assertNotNull(group);
     }
@@ -35,7 +35,7 @@ public class GroupAnalyserTest
     public void buildGroupWithDifferentTypeAnalysers()
     {
         final GroupAnalyser group = GroupAnalyser
-                .withAnalyzers(new LowerAlphaAnalyzer()).withAnalyzers(LengthAnalyser.class)
+                .withAnalyzers(new LowerAlphaAnalyzer()).withAnalysers(LengthAnalyser.class)
                 .withName("Test").build();
 
         assertNotNull(group);
@@ -44,14 +44,14 @@ public class GroupAnalyserTest
     @Test(expected = RuntimeException.class)
     public void buildGroupWithPatternAnalyser()
     {
-        GroupAnalyser.withName("Pattern").withAnalyzers(PatternAnalyser.class).build();
+        GroupAnalyser.withName("Pattern").withAnalysers(PatternAnalyser.class).build();
     }
 
     @Test
     public void analyseUsingGroup()
     {
         final GroupAnalyser group = GroupAnalyser.withName("Test")
-                .withAnalyzers(UpperAlphaAnalyser.class, NumericAnalyser.class).build();
+                .withAnalysers(UpperAlphaAnalyser.class, NumericAnalyser.class).build();
 
         Arrays.stream(new String[]{ "", "123", "ABC", "0", "abc" }).forEach(group::analyse);
 

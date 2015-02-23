@@ -10,7 +10,6 @@ import java.util.Objects;
 public class LengthAnalyser implements Analyser
 {
     private final Map<String, Integer> results = new HashMap<>();
-
     private int total;
 
     @Override
@@ -20,12 +19,12 @@ public class LengthAnalyser implements Analyser
         final String key = Integer.toString(len);
 
         total++;
-        results.put(key, results.containsKey(key) ? results.get(key) + 1 : 1);
+        results.put(key, results.getOrDefault(key, 0) + 1);
     }
 
     @Override
     public AnalysisResult getAnalysis()
     {
-        return new SimpleAnalysisResult("length", total, results);
+        return new SimpleAnalysisResult("Length", total, results);
     }
 }

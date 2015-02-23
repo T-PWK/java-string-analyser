@@ -2,9 +2,7 @@ package org.tpwk.analyser;
 
 import org.tpwk.analysis.AnalysisResult;
 
-public interface Analyser
+public interface Analyser extends Analysable
 {
-    void analyse(String input);
-
     AnalysisResult getAnalysis();
 }
