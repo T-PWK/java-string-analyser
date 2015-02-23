@@ -1,8 +1,10 @@
 package org.tpwk.analysis;
 
+import org.tpwk.analyser.Analyser;
+
 import java.io.IOException;
 
 public interface AnalysisFormatter
 {
-    void format(AnalysisResult result) throws IOException;
+    void format(Analyser... analysers) throws IOException;
 }
