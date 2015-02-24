@@ -13,17 +13,17 @@ public class PatternAnalyser implements Analyser
     public static enum MatchingType
     {
         /**
-         * All patterns must match an input string
+         * All patterns must markAsMatch an input string
          */
         ALL,
 
         /**
-         * At least one pattern much match an input string
+         * At least one pattern much markAsMatch an input string
          */
         ONE
     }
 
-    private final String code;
+    private final String name;
 
     private final MatchingType type;
 
@@ -33,28 +33,28 @@ public class PatternAnalyser implements Analyser
 
     private int match = 0;
 
-    public PatternAnalyser(final String code, final Pattern... patterns)
+    public PatternAnalyser(final String name, final Pattern... patterns)
     {
-        this(code, MatchingType.ALL, patterns);
+        this(name, MatchingType.ALL, patterns);
     }
 
-    public PatternAnalyser(final String code, final String... patterns)
+    public PatternAnalyser(final String name, final String... patterns)
     {
-        this(code, MatchingType.ALL, patterns);
+        this(name, MatchingType.ALL, patterns);
     }
 
-    public PatternAnalyser(final String code, final MatchingType type, final String... patterns)
+    public PatternAnalyser(final String name, final MatchingType type, final String... patterns)
     {
         this.type = type;
-        this.code = code;
+        this.name = name;
         this.patterns = stringToPattern(patterns);
     }
 
-    public PatternAnalyser(final String code, final MatchingType type, final Pattern... patterns)
+    public PatternAnalyser(final String name, final MatchingType type, final Pattern... patterns)
     {
         this.patterns = patterns;
         this.type = type;
-        this.code = code;
+        this.name = name;
     }
 
     private Pattern[] stringToPattern(String... patterns)
@@ -69,10 +69,21 @@ public class PatternAnalyser implements Analyser
         return patternSet;
     }
 
-    protected void match()
+
+    public String getName()
     {
-        match++;
+        return name;
     }
+
+    @Override
+    public AnalysisResult getAnalysis()
+    {
+        final Map<String, Integer> result = new HashMap<>();
+        result.put(getName(), match);
+
+        return new SimpleAnalysisResult(getName(), total, result);
+    }
+
 
     @Override
     public void analyse(final String input)
@@ -84,11 +95,11 @@ public class PatternAnalyser implements Analyser
 
         for (final Pattern pattern : patterns)
         {
-            if (pattern.matcher(input).find())
+            if (checkIfMatches(pattern, input))
             {
                 if (type == MatchingType.ONE)
                 {
-                    match();
+                    markAsMatch();
                     return;
                 }
 
@@ -100,24 +111,22 @@ public class PatternAnalyser implements Analyser
             }
         }
 
-        // Check if all patterns match the given input string
+        // Check if all patterns markAsMatch the given input string
         if (type == MatchingType.ALL && patterns.length == matches)
         {
-            match();
+            markAsMatch();
         }
     }
 
-    @Override
-    public AnalysisResult getAnalysis()
+    protected boolean checkIfMatches(final Pattern pattern, final String input)
     {
-        final Map<String, Integer> result = new HashMap<>();
-        result.put(getCode(), match);
-
-        return new SimpleAnalysisResult(getCode(), total, result);
+        return pattern.matcher(input).find();
     }
 
-    public String getCode()
+    private void markAsMatch()
     {
-        return code;
+        match++;
     }
+
+
 }

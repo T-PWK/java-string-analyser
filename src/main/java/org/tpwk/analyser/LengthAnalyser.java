@@ -7,6 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * This analyser performs analysis of input string lengths.
+ * <p>
+ * Analysis results keys indicate string lengths and the value indicate number of occurrences.
+ *
+ * @author T-PWK
+ */
 public class LengthAnalyser implements Analyser
 {
     private final Map<String, Integer> results = new HashMap<>();

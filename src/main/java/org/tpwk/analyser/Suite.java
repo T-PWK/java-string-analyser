@@ -8,19 +8,19 @@ public class Suite implements Analysable
     {
         private Map<String, GroupAnalyser.GroupAnalyserBuilder> groups = new LinkedHashMap<>();
 
-        public SuiteBuilder groupWithName(final String group, final String name)
+        public SuiteBuilder setName(final String group, final String name)
         {
             getGroup(group).withName(name);
             return this;
         }
 
-        public SuiteBuilder groupWithAnalysers(final String code, final Analyser... analysers)
+        public SuiteBuilder addAnalysers(final String code, final Analyser... analysers)
         {
             getGroup(code).withAnalysers(analysers);
             return this;
         }
 
-        public SuiteBuilder groupWithAnalysers(final String code, final Class<? extends Analyser>... analysers)
+        public SuiteBuilder addAnalysers(final String code, final Class<? extends Analyser>... analysers)
         {
             getGroup(code).withAnalysers(analysers);
             return this;
@@ -64,31 +64,31 @@ public class Suite implements Analysable
 
     public static SuiteBuilder group(final String code, final String name, final Analyser... analysers)
     {
-        return new SuiteBuilder().groupWithName(code, name).groupWithAnalysers(code, analysers);
+        return new SuiteBuilder().setName(code, name).addAnalysers(code, analysers);
     }
 
     public static SuiteBuilder group(final String code, final String name, final Class<? extends Analyser>... analysers)
     {
         final SuiteBuilder builder = new SuiteBuilder();
-        return builder.groupWithName(code, name).groupWithAnalysers(code, analysers);
+        return builder.setName(code, name).addAnalysers(code, analysers);
     }
 
-    public static SuiteBuilder groupWithName(final String code, final String name)
+    public static SuiteBuilder setName(final String code, final String name)
     {
         final SuiteBuilder builder = new SuiteBuilder();
-        return builder.groupWithName(code, name);
+        return builder.setName(code, name);
     }
 
-    public static SuiteBuilder groupWithAnalysers(final String code, final Analyser... analysers)
+    public static SuiteBuilder addAnalysers(final String code, final Analyser... analysers)
     {
         final SuiteBuilder builder = new SuiteBuilder();
-        return builder.groupWithAnalysers(code, analysers);
+        return builder.addAnalysers(code, analysers);
     }
 
-    public static SuiteBuilder groupWithAnalysers(final String code, final Class<? extends Analyser>... analysers)
+    public static SuiteBuilder addAnalysers(final String code, final Class<? extends Analyser>... analysers)
     {
         final SuiteBuilder builder = new SuiteBuilder();
-        return builder.groupWithAnalysers(code, analysers);
+        return builder.addAnalysers(code, analysers);
     }
 
     @Override

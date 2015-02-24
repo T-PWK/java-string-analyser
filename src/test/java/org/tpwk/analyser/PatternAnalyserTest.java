@@ -23,6 +23,6 @@ public class PatternAnalyserTest
 
         assertEquals(4, result.getTotal());
         assertEquals(1, result.getResults().size());
-        assertEquals(2, result.getResults().get(analyser.getCode()).intValue());
+        assertEquals(2, result.getResults().get(analyser.getName()).intValue());
     }
 }

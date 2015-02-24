@@ -62,7 +62,7 @@ public class PatternAnalysersTest
 
         assertNotNull(values);
         assertEquals(1, values.size());
-        assertTrue(values.containsKey(analyser.getCode()));
+        assertTrue(values.containsKey(analyser.getName()));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class PatternAnalysersTest
 
         assertNotNull(values);
         assertEquals(1, values.size());
-        assertEquals(matches, values.get(analyser.getCode()).intValue());
+        assertEquals(matches, values.get(analyser.getName()).intValue());
     }
 
     @Test(expected = NullPointerException.class)
